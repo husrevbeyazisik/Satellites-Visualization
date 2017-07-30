@@ -163,4 +163,49 @@ public class Resources {
     		}
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    //////////////////////////////
+
+@Path("/realtime")
+    @GET
+    @Produces(MediaType.TEXT_HTML)
+    public String  RealTimePositions() throws IOException  {
+    	
+    return readFile("C:/Users/husre/workspace/Satellites-Visualization/html/realtime/index.html",Charset.defaultCharset());
+    }
+    
+    static String realTimePositions = "no";
+    
+    
+	// AJAX Method
+    @POST
+    @Path("/getPositionsRealTime")
+    public String getPositionsRealTime() throws Exception{
+       // int seqNo = Integer.parseInt((seq.split("="))[1]); // seq=1 olarak geliyor
+        
+        
+        
+        return realTimePositions;
+    }
+    
+    
+	// AJAX Method
+    @POST
+    @Path("/setPositionsRealTime")
+    public void setPositionsRealTime(String positions) throws Exception{
+       // int seqNo = Integer.parseInt((seq.split("="))[1]); // seq=1 olarak geliyor
+        
+        realTimePositions = positions;
+    }
+    
+    
 }

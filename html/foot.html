@@ -221,7 +221,12 @@ $(function () {
 
 								} else {   
 								
-										if(INTERSECTED) INTERSECTED.material.color.setHex( 0xffffff );
+										//if(INTERSECTED) INTERSECTED.material.color.setHex( 0xffffff );
+										var satNo=0;
+        		$("p.sat").each(function(){
+        			satellites[satNo++].material.color.setHex( 0xffffff );
+        		});
+
 								}
 				
 				renderer.render( scene, camera );

@@ -10,7 +10,7 @@ import org.glassfish.jersey.servlet.ServletContainer;
 public class App {
     public static void main(String[] args) throws Exception {
        
-    	BasicConfigurator.configure();
+    	//BasicConfigurator.configure();
     	
     	
    	 	ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
