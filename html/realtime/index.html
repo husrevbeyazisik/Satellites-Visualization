@@ -42,9 +42,10 @@
 
 <div id='time'></div>
 <div id='satName'></div>
+
 <div id='container'></div>
 <div id='sats'></div>
-<p hidden id='stepSec' sec="3"></p>
+<p hidden id='stepSec' sec="1"></p>
 </body>
 <script type='text/javascript'>
 
@@ -148,7 +149,6 @@ $(function () {
 			/* satellite particles */
 			var satellites = new Array();
 			var geometries = new Array();
-			var satList = new Array();
 			var sats = new Array();
 
 			var x,y,z;
@@ -187,13 +187,13 @@ $(function () {
         		scene.add(earth);
 
 
+
         		//Adding Satellites
         		var satNo;
         		for(satNo=0;satNo<satName.length;satNo++)
         		{
         				geometries[satNo] = new THREE.Geometry();
 
-        				//satList[satNo] = satName[satNo];
         				x = satX[satNo] / dividingRatio;
         				y = satY[satNo] / dividingRatio;
         				z = satZ[satNo] / dividingRatio;
@@ -211,18 +211,19 @@ $(function () {
 						});
 
         			satellites[satNo] = new THREE.PointCloud(geometries[satNo], particle_Material);
-        			satellites[satNo].name =  satName[satNo]
+        			satellites[satNo].name =  satName[satNo];
+        			satellites[satNo].satNo =  satNo;
 
         			scene.add(satellites[satNo]);
 
-            			satNo++;
+            		satNo++;
 
         		}
 
 
         		
         		raycaster = new THREE.Raycaster();
-				raycaster.params.PointCloud.threshold = 2; // Precision of raycaster
+				raycaster.params.PointCloud.threshold = 4; // Precision of raycaster
 				mouse = new THREE.Vector2();
 
 				document.addEventListener( 'mousemove', onDocumentMouseMove, false );
@@ -256,20 +257,19 @@ $(function () {
 
 						$("#time").text( satT[0] );
 
-				/* Move sats to their positions */
-				var satNo;
-        		for(satNo=0;satNo<satName.length;satNo++)
-        		{
+							/* Move sats to their positions */
+							var satNo;
+			        		for(satNo=0;satNo<satName.length;satNo++)
+			        		{
+									x = satX[satNo] / dividingRatio;
+									y = satY[satNo] / dividingRatio;
+									z = satZ[satNo] / dividingRatio;
 
-						x = satX[satNo] / dividingRatio;
-						y = satY[satNo] / dividingRatio;
-						z = satZ[satNo] / dividingRatio;
+									satellites[satNo].geometry.vertices[0].set( x , y , z );
+									satellites[satNo].geometry.verticesNeedUpdate=true;
 
-						satellites[satNo].geometry.vertices[0].set( x , y , z );
-						satellites[satNo].geometry.verticesNeedUpdate=true;
-
-					satNo++;
-				}
+								satNo++;
+							}
 				
 				}
 
@@ -287,27 +287,24 @@ $(function () {
 								if ( intersects.length > 0 ) {
 
 									        if ( intersects[ 0 ].object.name !="earth")
-									        {                               
+									        {                 
+									        	if(INTERSECTED) 
+									        	{
+										        	INTERSECTED.material.color.setHex( 0xffffff ); 
+										            INTERSECTED.material.size = 0.5 ; 
+									        	}         
+
 									            INTERSECTED = intersects[ 0 ].object;                
 									            INTERSECTED.material.color.setHex( 0xff0000 ); 
+									            INTERSECTED.material.size = 1.5 ; 
 
 									            var name  =  INTERSECTED.name;   
 
-									           $("#satName").text(name);          
+									           $("#satName").text(name + " " + satV[INTERSECTED.satNo].toFixed(3) + " km/sec");
+
 									        }
 
-									      
-
-								} else {   
-										if(INTERSECTED) INTERSECTED.material.color.setHex( 0xffffff );
-							
-						        	/*	var satNo;
-						        		for(satNo=0;satNo<satName.length;satNo++)
-						        		{
-						        			satellites[satNo].material.color.setHex( 0xffffff );
-						        		}*/
-
-								}
+								} 
 				
 				renderer.render( scene, camera );
 			}
@@ -321,17 +318,6 @@ $(function () {
 
 
 	}
-
-
-
-
-
-
-
-
-
-
-
 
 
 </script>

@@ -41,9 +41,8 @@
         <dependency>
             <groupId>org.glassfish.jersey.containers</groupId>
             <artifactId>jersey-container-servlet-core</artifactId>
-            <!-- use the following artifactId if you don't need servlet 2.x compatibility -->
-            <!-- artifactId>jersey-container-servlet</artifactId -->
         </dependency>
+        
         <dependency>
             <groupId>org.glassfish.jersey.inject</groupId>
             <artifactId>jersey-hk2</artifactId>
@@ -59,21 +58,25 @@
         	<artifactId>jetty-server</artifactId>
         	<version>9.4.6.v20170531</version>
         </dependency>
+        
         <dependency>
         	<groupId>org.eclipse.jetty</groupId>
         	<artifactId>jetty-servlet</artifactId>
         	<version>9.4.6.v20170531</version>
         </dependency>
+        
         <dependency>
         	<groupId>org.apache.spark</groupId>
         	<artifactId>spark-sql_2.10</artifactId>
         	<version>2.1.1</version>
         </dependency>
+        
         <dependency>
         	<groupId>org.apache.hadoop</groupId>
         	<artifactId>hadoop-client</artifactId>
         	<version>2.7.3</version>
         </dependency>
+        
     </dependencies>
     <properties>
         <jersey.version>2.26-b08</jersey.version>

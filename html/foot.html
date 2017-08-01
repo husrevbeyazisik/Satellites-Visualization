@@ -1,7 +1,7 @@
 
 
 <p hidden id='status' ready="0"></p>
-<p hidden id='stepSec' sec="1"></p>
+<p hidden id='stepSec' sec="5"></p>
 </body>
 <script type='text/javascript'>
 
@@ -206,28 +206,27 @@ $(function () {
 
 				var intersects = raycaster.intersectObjects( scene.children );
 
-								if ( intersects.length > 0 ) {
+											if ( intersects.length > 0 ) {
 
 									        if ( intersects[ 0 ].object.name !="earth")
-									        {                               
+									        {                 
+									        	if(INTERSECTED) 
+									        	{
+										        	INTERSECTED.material.color.setHex( 0xffffff ); 
+										            INTERSECTED.material.size = 0.5 ; 
+									        	}         
+
 									            INTERSECTED = intersects[ 0 ].object;                
 									            INTERSECTED.material.color.setHex( 0xff0000 ); 
+									            INTERSECTED.material.size = 1.5 ; 
 
 									            var name  =  INTERSECTED.name;   
 
-									           $("#satName").text(name);   
-									           console.log(name);                    
+									           $("#satName").text(name + " " + satV[INTERSECTED.satNo].toFixed(3) + " km/sec");
+
 									        }
 
-								} else {   
-								
-										//if(INTERSECTED) INTERSECTED.material.color.setHex( 0xffffff );
-										var satNo=0;
-        		$("p.sat").each(function(){
-        			satellites[satNo++].material.color.setHex( 0xffffff );
-        		});
-
-								}
+								} 
 				
 				renderer.render( scene, camera );
 			}
